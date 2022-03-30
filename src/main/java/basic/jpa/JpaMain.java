@@ -16,22 +16,15 @@ public class JpaMain {
         tx.begin();
         
         try{
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
             Member member = new Member();
-            member.setId(1L);
-            member.setName("HelloA");
+            member.setUsername("member1");
+            member.setTeam(team);
 
             em.persist(member);
-            
-            Member findMember = em.find(Member.class, 1L);
-            
-            findMember.setName("HelloJPA");
-
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList();
-
-            for(Member m: result){
-                System.out.println("member.getName() = " + m.getName());
-            }
 
             tx.commit();
         } catch(Exception e){
